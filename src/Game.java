@@ -1,7 +1,7 @@
 public class Game {
-    Private Hrac hrac;
-    Private SpravcePrikazu spravcePrikazu;
-    Private boolean hraBezi;
+    private Player hrac;
+    private SpravcePrikazu spravcePrikazu;
+    private boolean hraBezi;
 
     public void startGame(){};
     public void vstup(String vstup){};
