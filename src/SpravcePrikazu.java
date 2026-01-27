@@ -1,3 +1,5 @@
+import Commands.Command;
+
 import java.util.Map;
 
 public class SpravcePrikazu {

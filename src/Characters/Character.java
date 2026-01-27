@@ -1,3 +1,5 @@
+package Characters;
+
 public abstract class Character {
     private String jmeno;
 

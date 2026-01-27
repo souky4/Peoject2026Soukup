@@ -1,4 +1,6 @@
-public class GoCommand implements Command {
+package Commands;
+
+public class TakeCommand implements Command {
     @Override
     public void proved(String command, Player player) {
 

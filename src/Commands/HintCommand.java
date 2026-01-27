@@ -1,4 +1,6 @@
-public class HelpCommand implements Command {
+package Commands;
+
+public class HintCommand implements Command {
     @Override
     public void proved(String command, Player player) {
 
