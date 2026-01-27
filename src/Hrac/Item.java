@@ -1,3 +1,5 @@
+package Hrac;
+
 public class Item {
     private String nazev;
     private boolean jePrenosny;

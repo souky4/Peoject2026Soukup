@@ -1,3 +1,5 @@
+package Hrac;
+
 public class Player {
     private Room soucasnaMistnost;
     private Inventory inventory;

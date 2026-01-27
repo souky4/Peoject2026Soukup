@@ -1,3 +1,5 @@
+package Hrac;
+
 import Characters.Character;
 
 import java.util.ArrayList;

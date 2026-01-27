@@ -1,4 +1,5 @@
 package Commands;
+import Hrac.Player;
 
 public class EndCommand implements Command {
     @Override
