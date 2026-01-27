@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Peoject2026Soukup" />
+        <module name="jackson-demo" />
+        <module name="target" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Project2026Soukup" target="1.5" />
       <module name="src" target="1.5" />
     </bytecodeTargetLevel>
   </component>
