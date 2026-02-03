@@ -2,67 +2,82 @@
   "start": "vchod",
   "mistnosti": [
     {
-      "name": "vchod",
+      "id": "vchod",
+      "nazev": "Vchod",
       "popis": "Kamenný vchod do dávno opuštěné pevnosti. Vzduch je chladný a ticho znepokojivé.",
       "exits": {
-        "vychod": "Hlavni chodba"
-      }
+        "vychod": "hlavni_chodba"
+      },
+      "items": [],
+      "characters": []
     },
     {
-      "name": "Hlavni chodba",
+      "id": "hlavni_chodba",
+      "nazev": "Hlavní chodba",
       "popis": "Dlouhá chodba s popraskanými zdmi, odkud vedou cesty do dalších částí pevnosti.",
       "exits": {
-        "západ": "Vchod",
-        "východ": "Zbrojnice",
-        "sever": "Knihovna",
-        "jih": "Strážnice"
-      }
+        "zapad": "vchod",
+        "vychod": "zbrojnice",
+        "sever": "knihovna",
+        "jih": "straznice"
+      },
+      "items": [],
+      "characters": []
     },
     {
-      "name": "Zbrojnice",
+      "id": "zbrojnice",
+      "nazev": "Zbrojnice",
       "popis": "Místnost plná zrezivělých zbraní a starých stojanů pokrytých prachem.",
       "exits": {
-        "západ": "Hlavní chodba"
-      }
+        "zapad": "hlavni_chodba"
+      },
+      "items": [
+        {
+          "id": "mec",
+          "nazev": "Starý meč",
+          "popis": "Těžký meč s otupeným ostřím."
+        }
+      ],
+      "characters": []
     },
     {
-      "name": "Knihovna",
+      "id": "knihovna",
+      "nazev": "Knihovna",
       "popis": "Tiché místo plné zaprášených knih, ve kterých jsou ukryta dávná tajemství.",
       "exits": {
-        "jih": "Hlavní chodba"
-      }
+        "jih": "hlavni_chodba"
+      },
+      "items": [
+        {
+          "id": "svitek",
+          "nazev": "Magický svitek",
+          "popis": "Svitek popsaný neznámými runami."
+        }
+      ],
+      "characters": [
+        {
+          "id": "knihovnik",
+          "jmeno": "Starý knihovník",
+          "dialog": "Některé znalosti je lepší nechat zapomenuté."
+        }
+      ]
     },
     {
-      "name": "Strážnice",
+      "id": "straznice",
+      "nazev": "Strážnice",
       "popis": "Bývalá strážní místnost, kde máš pocit, že tě někdo neustále sleduje.",
       "exits": {
-        "sever": "Hlavní chodba",
-        "jih": "Trůnní sál"
-      }
-    },
-    {
-      "name": "Trůnní sál",
-      "popis": "Rozlehlý sál s prázdným trůnem. Ve vzduchu je cítit zbytky staré magie.",
-      "exits": {
-        "sever": "Strážnice",
-        "jih": "Alchymistická laboratoř"
-      }
-    },
-    {
-      "name": "Alchymistická laboratoř",
-      "popis": "Laboratoř plná rozbitých baňek, starých svitků a stop po dávných experimentech.",
-      "exits": {
-        "sever": "Trůnní sál",
-        "jih": "Kaple"
-      }
-    },
-    {
-      "name": "Alchymistická laboratoř",
-      "popis": "Laboratoř plná rozbitých baňek, starých svitků a stop po dávných experimentech.",
-      "exits": {
-        "sever": "Trůnní sál",
-        "jih": "Kaple"
-      }
+        "sever": "hlavni_chodba",
+        "jih": "trunni_sal"
+      },
+      "items": [],
+      "characters": [
+        {
+          "id": "strasny_duch",
+          "jmeno": "Strašný duch",
+          "dialog": "Opusť toto místo, smrtelníku!"
+        }
+      ]
     }
   ]
 }
