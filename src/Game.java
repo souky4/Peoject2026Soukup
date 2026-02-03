@@ -7,7 +7,9 @@ public class Game {
     private SpravcePrikazu spravcePrikazu;
     private boolean hraBezi;
 
-    public void startGame(){};
+    public void startGame(){
+
+    };
     public void vstup(String vstup){};
     public void endGame(){};
 

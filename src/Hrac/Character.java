@@ -1,3 +1,5 @@
+package Hrac;
+
 public class Character {
     private String jmeno;
     private String popis;
