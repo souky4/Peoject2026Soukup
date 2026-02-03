@@ -1,9 +1,11 @@
+
+
 import Hrac.Room;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class World {
+
     private Map<String, Room> rooms;
     private Room startingRoom;
 
@@ -11,8 +13,23 @@ public class World {
         rooms = new HashMap<>();
     }
 
-    public void addRoom(Room room) {rooms.put(room.getJmeno(), room);};
-    public Room getRoom(String roomName) {return rooms.get(roomName);};
-    public void setStartingRoom(Room room){startingRoom = room;};
-    public Room getStartingRoom(){return startingRoom;};
+    public void addRoom(Room room) {
+        rooms.put(room.getJmeno(), room);
+    }
+
+    public Room getRoom(String name) {
+        return rooms.get(name);
+    }
+
+    public void setStartingRoom(Room room) {
+        this.startingRoom = room;
+    }
+
+    public Room getStartingRoom() {
+        return startingRoom;
+    }
+
+    public Collection<Room> getAllRooms() {
+        return rooms.values();
+    }
 }
