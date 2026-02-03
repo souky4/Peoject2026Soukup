@@ -2,12 +2,12 @@ package Hrac;
 
 public class Character {
     private String jmeno;
-    private String popis;
+    private String id;
     private String dialog;
 
-    public Character(String jmeno, String popis, String dialog) {
+    public Character(String jmeno, String id, String dialog) {
         this.jmeno = jmeno;
-        this.popis = popis;
+        this.id = id;
         this.dialog = dialog;
     }
 
@@ -16,7 +16,7 @@ public class Character {
     }
 
     public String getPopis() {
-        return popis;
+        return id;
     }
 
     public String getDialog() {

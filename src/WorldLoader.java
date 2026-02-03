@@ -31,76 +31,82 @@ public class WorldLoader {
     }
 
     private void loadRooms(World world, JsonObject json) {
-        JsonArray rooms = json.getAsJsonArray("rooms");
+        JsonArray roomsJson = json.getAsJsonArray("mistnosti");
 
-        for (JsonElement element : rooms) {
-            JsonObject r = element.getAsJsonObject();
-            String name = r.get("name").getAsString();
-            String description = r.get("description").getAsString();
+        for (JsonElement element : roomsJson) {
+            JsonObject roomJson = element.getAsJsonObject();
+            String id = roomJson.get("id").getAsString();
+            String nazev = roomJson.get("nazev").getAsString();
+            String popis = roomJson.get("popis").getAsString();
 
-            world.addRoom(new Room(name, description));
+            Room room = new Room(id,nazev,popis);
+            world.addRoom(room);
         }
     }
 
 
     private void connectRooms(World world, JsonObject json) {
-        JsonArray rooms = json.getAsJsonArray("rooms");
+        JsonArray roomsJson = json.getAsJsonArray("mistnosti");
 
-        for (JsonElement element : rooms) {
-            JsonObject r = element.getAsJsonObject();
-            Room room = world.getRoom(r.get("name").getAsString());
+        for (JsonElement element : roomsJson) {
+            JsonObject roomJson = element.getAsJsonObject();
+            String roomId = roomJson.get("id").getAsString();
 
-            JsonObject exits = r.getAsJsonObject("exits");
-            for (Map.Entry<String, JsonElement> exit : exits.entrySet()) {
-                String smer = exit.getKey();
-                String targetName = exit.getValue().getAsString();
-                room.addExit(smer, world.getRoom(targetName));
+            Room room = world.getRoom(roomId);
+            JsonObject exitsJson = roomJson.getAsJsonObject("exits");
+            for (String smer : exitsJson.keySet()) {
+                String targetId = exitsJson.get(smer).getAsString();
+                Room targeRoom = world.getRoom(targetId);
+                room.addExit(smer,targeRoom);
             }
         }
     }
 
     private void loadItems(World world, JsonObject json) {
-        JsonArray rooms = json.getAsJsonArray("rooms");
+        JsonArray roomsJson = json.getAsJsonArray("rooms");
 
-        for (JsonElement element : rooms) {
-            JsonObject r = element.getAsJsonObject();
-            Room room = world.getRoom(r.get("name").getAsString());
+        for (JsonElement element : roomsJson) {
+            JsonObject roomJson = element.getAsJsonObject();
+            Room room = world.getRoom(roomJson.get("id").getAsString());
+            JsonArray itemsJson = roomJson.getAsJsonArray("items");
 
-            if (!r.has("items")) continue;
+            if (itemsJson == null) continue;
 
-            for (JsonElement itemEl : r.getAsJsonArray("items")) {
-                JsonObject i = itemEl.getAsJsonObject();
-                room.addItem(new Item(
-                        i.get("name").getAsString(),
-                        i.get("description").getAsString(),
-                        i.get("portable").getAsBoolean()
-                ));
+            for (JsonElement itemElement : itemsJson) {
+                JsonObject itemJson = itemElement.getAsJsonObject();
+                Item item = new Item(
+                        itemJson.get("name").getAsString(),
+                        itemJson.get("description").getAsString(),
+                        itemJson.get("portable").getAsBoolean()
+                );
+                room.addItem(item);
             }
         }
     }
 
     private void loadCharacters(World world, JsonObject json) {
-        JsonArray rooms = json.getAsJsonArray("rooms");
+        JsonArray roomsJson = json.getAsJsonArray("mistnosti");
 
-        for (JsonElement element : rooms) {
-            JsonObject r = element.getAsJsonObject();
-            Room room = world.getRoom(r.get("name").getAsString());
+        for (JsonElement element : roomsJson) {
+            JsonObject roomJson = element.getAsJsonObject();
+            Room room = world.getRoom(roomJson.get("id").getAsString());
+            JsonArray charsJson = roomJson.getAsJsonArray("characters");
 
-            if (!r.has("characters")) continue;
+            if (charsJson == null ) continue;
 
-            for (JsonElement chEl : r.getAsJsonArray("characters")) {
-                JsonObject c = chEl.getAsJsonObject();
-                room.addCharacter(new Character(
-                        c.get("name").getAsString(),
-                        c.get("description").getAsString(),
-                        c.get("dialog").getAsString()
-                ));
+            for (JsonElement charElement : charsJson) {
+                JsonObject charJson = charElement.getAsJsonObject();
+                Character npc = new NPC(
+                        charJson.get("id").getAsString(),
+                        charJson.get("jmeno").getAsString(),
+                        charJson.get("dialog").getAsString()
+                );
             }
         }
     }
 
     private void setStartingRoom(World world, JsonObject json) {
-        String start = json.get("start").getAsString();
-        world.setStartingRoom(world.getRoom(start));
+        String startId = json.get("start").getAsString();
+        world.setStartingRoom(world.getRoom(startId));
     }
 }

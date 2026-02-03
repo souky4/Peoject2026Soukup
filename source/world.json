@@ -35,7 +35,7 @@
         {
           "id": "mec",
           "nazev": "Starý meč",
-          "popis": "Těžký meč s otupeným ostřím."
+          "portable": true
         }
       ],
       "characters": []
@@ -78,6 +78,67 @@
           "dialog": "Opusť toto místo, smrtelníku!"
         }
       ]
+    },
+    {
+      "id": "truni_sal",
+      "nazev": "Trůní sál",
+      "popis": "",
+      "exits": {
+        "sever": "straznice",
+        "jih": "alchymista"
+      },
+      "items":[
+        {
+          "id": "trun",
+          "nazev" : "Trůn",
+          "portable" : false
+        }
+      ],
+      "characters": []
+    },
+    {
+      "id": "alchymista",
+      "nazev": "Alchymistická laboratoř",
+      "popis": "",
+      "exits": {
+        "sever": "truni_sal",
+        "jih": "Kaple"
+      },
+      "items": [
+        {
+          "id": "klic",
+          "nazev": "Klíč",
+          "portable": true
+        }
+      ],
+      "charecters": [
+        {
+          "id": "duch_a",
+          "jmeno": "Duch alchymisty",
+          "dialog": ""
+        }
+      ]
+    },
+    {
+      "id": "kaple",
+      "nazev": "Kaple",
+      "popis": "",
+      "exits": {
+        "sever": "alchymista"
+      },
+      "items": [
+        {
+          "id": "krystal",
+          "nazev": "Magický krystal",
+          "portable": true
+
+        }
+      ],
+      "characters": []
+
     }
+
+
+
   ]
 }

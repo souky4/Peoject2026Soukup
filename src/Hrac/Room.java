@@ -6,13 +6,15 @@ public class Room {
 
     private String jmeno;
     private String popis;
+    private String id;
     private Map<String, Room> exits;
     private List<Item> items;
     private List<Character> characters;
 
-    public Room(String jmeno, String popis) {
+    public Room(String id,String jmeno, String popis) {
         this.jmeno = jmeno;
         this.popis = popis;
+        this.id = id;
         this.exits = new HashMap<>();
         this.items = new ArrayList<>();
         this.characters = new ArrayList<>();
