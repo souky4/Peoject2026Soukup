@@ -2,17 +2,17 @@ package Hrac;
 
 public class Item {
     private String nazev;
-    private String popis;
+    private String id;
     private boolean jePrenosny;
 
-    public Item(String name, String description, boolean jePrenosny) {
+    public Item(String name, String id, boolean jePrenosny) {
         this.nazev = name;
-        this.popis = description;
+        this.id = id;
         this.jePrenosny = jePrenosny();
     }
 
     public String getNazev() {return nazev;};
-    public String getPopis() {return popis;};
+    public String getId() {return id;};
     public boolean jePrenosny() {return jePrenosny;};
 
 }

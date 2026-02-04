@@ -1,7 +1,9 @@
 package Commands;
 
+import Hrac.Game;
 import Hrac.Player;
 
+
 public interface Command {
-   void proved(String command, Player player);
+   void proved(Game game,String argument);
 }

@@ -1,6 +1,5 @@
-import Hrac.Player;
+package Hrac;
 
-import java.util.Scanner;
 
 public class Game {
     private Player hrac;

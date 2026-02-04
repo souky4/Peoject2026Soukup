@@ -1,14 +1,14 @@
 package Hrac;
 
-public class Character {
+public abstract  class Character {
     private String jmeno;
     private String id;
-    private String dialog;
 
-    public Character(String jmeno, String id, String dialog) {
+
+    public Character(String jmeno, String id) {
         this.jmeno = jmeno;
         this.id = id;
-        this.dialog = dialog;
+
     }
 
     public String getJmeno() {
@@ -19,7 +19,5 @@ public class Character {
         return id;
     }
 
-    public String getDialog() {
-        return dialog;
-    }
+
 }

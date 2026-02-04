@@ -1,10 +1,10 @@
 
 import Hrac.Character;
 import Hrac.Item;
+import Hrac.NPC;
 import Hrac.Room;
 import com.google.gson.*;
 import java.io.*;
-import java.util.Map;
 
 public class WorldLoader {
 
