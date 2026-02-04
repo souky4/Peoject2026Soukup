@@ -1,6 +1,5 @@
 package Commands;
-import Hrac.Game;
-import Hrac.Player;
+import Hra.Game;
 
 public class ExploreCommand implements Command {
 

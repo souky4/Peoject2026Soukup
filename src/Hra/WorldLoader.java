@@ -1,3 +1,4 @@
+package Hra;
 
 import Hrac.Character;
 import Hrac.Item;

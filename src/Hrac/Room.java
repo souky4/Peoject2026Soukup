@@ -40,6 +40,8 @@ public class Room {
         items.add(item);
     }
 
+    public String getId(){return id;}
+
     public void removeItem(Item item) {
         items.remove(item);
     }

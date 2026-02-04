@@ -1,5 +1,6 @@
+package Hra;
+
 import Commands.*;
-import Hrac.Player;
 
 import java.util.HashMap;
 import java.util.Map;
