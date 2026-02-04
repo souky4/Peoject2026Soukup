@@ -6,7 +6,8 @@
       "nazev": "Vchod",
       "popis": "Kamenný vchod do dávno opuštěné pevnosti. Vzduch je chladný a ticho znepokojivé.",
       "exits": {
-        "vychod": "hlavni_chodba"
+        "vychod": "hlavni_chodba",
+        "sever": "knihovna"
       },
       "items": [],
       "characters": []
@@ -18,10 +19,15 @@
       "exits": {
         "zapad": "vchod",
         "vychod": "zbrojnice",
-        "sever": "knihovna",
         "jih": "straznice"
       },
-      "items": [],
+      "items": [
+        {
+          "id": "pochoden",
+          "nazev": "Pochodeň",
+          "portable": true
+        }
+      ],
       "characters": []
     },
     {
@@ -33,9 +39,9 @@
       },
       "items": [
         {
-          "id": "mec",
-          "nazev": "Starý meč",
-          "portable": true
+          "id": "oltar",
+          "nazev": "Oltář",
+          "portable": false
         }
       ],
       "characters": []
@@ -45,19 +51,19 @@
       "nazev": "Knihovna",
       "popis": "Tiché místo plné zaprášených knih, ve kterých jsou ukryta dávná tajemství.",
       "exits": {
-        "jih": "hlavni_chodba"
+        "jih": "vchod"
       },
       "items": [
         {
           "id": "svitek",
           "nazev": "Magický svitek",
-          "popis": "Svitek popsaný neznámými runami."
+          "portable": true
         }
       ],
       "characters": [
         {
-          "id": "knihovnik",
-          "jmeno": "Starý knihovník",
+          "id": "duch_knihovnika",
+          "jmeno": "Duch knihovníka",
           "dialog": "Některé znalosti je lepší nechat zapomenuté."
         }
       ]
@@ -73,36 +79,36 @@
       "items": [],
       "characters": [
         {
-          "id": "strasny_duch",
-          "jmeno": "Strašný duch",
-          "dialog": "Opusť toto místo, smrtelníku!"
+          "id": "strazny",
+          "jmeno": "Strážný",
+          "dialog": "Nepovolaní nemají vstupovat!"
         }
       ]
     },
     {
-      "id": "truni_sal",
-      "nazev": "Trůní sál",
-      "popis": "",
+      "id": "trunni_sal",
+      "nazev": "Trůnní sál",
+      "popis": "Hlavní sál pevnosti s impozantním trůnem.",
       "exits": {
         "sever": "straznice",
-        "jih": "alchymista"
+        "jih": "alchymisticka_laborator"
       },
-      "items":[
+      "items": [
         {
           "id": "trun",
-          "nazev" : "Trůn",
-          "portable" : false
+          "nazev": "Trůn",
+          "portable": false
         }
       ],
       "characters": []
     },
     {
-      "id": "alchymista",
+      "id": "alchymisticka_laborator",
       "nazev": "Alchymistická laboratoř",
-      "popis": "",
+      "popis": "Místo starých experimentů a alchymistických pokusů.",
       "exits": {
-        "sever": "truni_sal",
-        "jih": "Kaple"
+        "sever": "trunni_sal",
+        "jih": "kaple"
       },
       "items": [
         {
@@ -111,34 +117,29 @@
           "portable": true
         }
       ],
-      "charecters": [
+      "characters": [
         {
-          "id": "duch_a",
+          "id": "duch_alchymisty",
           "jmeno": "Duch alchymisty",
-          "dialog": ""
+          "dialog": "Tento klíč ti otevře nové možnosti."
         }
       ]
     },
     {
       "id": "kaple",
       "nazev": "Kaple",
-      "popis": "",
+      "popis": "Tiché místo s důležitými herními objekty, zde se nachází Magický krystal.",
       "exits": {
-        "sever": "alchymista"
+        "sever": "alchymisticka_laborator"
       },
       "items": [
         {
           "id": "krystal",
           "nazev": "Magický krystal",
           "portable": true
-
         }
       ],
       "characters": []
-
     }
-
-
-
   ]
 }
