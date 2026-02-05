@@ -23,6 +23,28 @@ public class SpravcePrikazu {
    }
 
    public void provedPrikaz(String prikaz){
+       if (prikaz == null) return;
+
+       prikaz = prikaz.trim().toLowerCase();
+       if(prikaz.isEmpty()) return;
+
+       String command;
+       String argument;
+
+       int spaceIndex = prikaz.indexOf(" ");
+
+       if (spaceIndex == -1) {
+           command = prikaz;
+           argument = "";
+       }else{
+           command = prikaz.substring(0, spaceIndex);
+           argument = prikaz.substring(spaceIndex+1).trim();
+       }
+       Command commandObj = commands.get(command);
+
+       if(commandObj == null){
+
+       }
 
 
    }
