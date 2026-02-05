@@ -7,7 +7,8 @@ public class Room {
     private String jmeno;
     private String popis;
     private String id;
-    private Map<String, Room> exits;
+    private Map<String,Room> exit;
+
     private List<Item> items;
     private List<Character> characters;
 
@@ -15,7 +16,7 @@ public class Room {
         this.jmeno = jmeno;
         this.popis = popis;
         this.id = id;
-        this.exits = new HashMap<>();
+        this.exit = new HashMap<>();
         this.items = new ArrayList<>();
         this.characters = new ArrayList<>();
     }
@@ -29,16 +30,18 @@ public class Room {
     }
 
     public Room getExit(String smer) {
-        return exits.get(smer);
+        return exit.get(smer);
     }
 
     public void addExit(String smer, Room room) {
-        exits.put(smer, room);
+        exit.put(smer, room);
     }
 
     public void addItem(Item item) {
         items.add(item);
     }
+
+    public String getExitNames(){return String.join(", ", exit.keySet());}
 
     public String getId(){return id;}
 

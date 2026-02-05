@@ -15,7 +15,7 @@ public abstract  class Character {
         return jmeno;
     }
 
-    public String getPopis() {
+    public String getId() {
         return id;
     }
 

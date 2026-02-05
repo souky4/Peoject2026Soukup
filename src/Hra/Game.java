@@ -1,7 +1,10 @@
 package Hra;
 
 
+import Hrac.Character;
 import Hrac.Inventory;
+import Hrac.Item;
+import Hrac.NPC;
 import Hrac.Room;
 
 import java.util.Scanner;
@@ -31,22 +34,11 @@ public class Game {
 
         while(isRunning){
             String input = scanner.nextLine();
-            spravceprikazu.provedPrikaz(input);
+            spravceprikazu.provedPrikaz(input,this);
         }
     }
 
-    public void moveTo(String smer){
-        Room next = currentRoom.getExit(smer);
 
-        if(next == null){
-            printMessage("Tímto směrem se jít nedá");
-            return;
-        }
-
-        currentRoom = next;
-        showCurrentRoom();
-        checkWinCondition();
-    }
 
     private void checkWinCondition(){
         if(currentRoom.getId().equals("vchod")&& inventory.getItem("magicky_krystal")!=null){
@@ -61,6 +53,48 @@ public class Game {
 
     public void printMessage(String text){
         System.out.println(text);
+    }
+
+    public void showCurrentRoom() {
+        printMessage("");
+        printMessage(currentRoom.getJmeno());
+        printMessage(currentRoom.getPopis());
+
+        if (!currentRoom.getItems().isEmpty()) {
+            printMessage("Předměty:");
+            for (Item item : currentRoom.getItems()) {
+                printMessage("- " + item.getNazev() + " (" + item.getId() + ")");
+            }
+        }
+        if (!currentRoom.getCharacters().isEmpty()) {
+            printMessage("Postavy:");
+            for (Character npc : currentRoom.getCharacters()) {
+                if (npc instanceof NPC) {
+                    printMessage("- " + npc.getJmeno() + " (" + npc.getId() + ")");
+                }
+            }
+
+        }
+        printMessage("Východy: " + currentRoom.getExitNames());
+
+
+    }
+
+    public void moveTo(String direction){
+        if (currentRoom.getId().equals("straznice") && direction.equals("jih") && !unlockedTrunniSal) {
+            printMessage("Dveře jsou zamčené. Možná by pomohl klíč.");
+            return;
+        }
+
+        Room next = currentRoom.getExit(direction);
+        if (next == null) {
+            printMessage("Tímto směrem se jít nedá.");
+            return;
+        }
+
+        currentRoom = next;
+        showCurrentRoom();
+        checkWinCondition();
     }
 
 
