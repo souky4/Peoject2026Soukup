@@ -6,10 +6,11 @@ public class DropCommand implements Command {
 
     @Override
     public void proved(Game game, String argument) {
-        if(argument == null){
-            game.printMessage("Co mám položit");
+        if (argument == null) {
+            game.printMessage("Co mám položit? (např. poloz mec)");
             return;
         }
+        game.dropItem(argument.toLowerCase());
 
     }
 }

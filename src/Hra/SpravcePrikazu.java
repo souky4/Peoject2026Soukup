@@ -11,45 +11,44 @@ public class SpravcePrikazu {
    public SpravcePrikazu(){
        commands = new HashMap<>();
 
-       commands.put("Polož",new DropCommand());
-       commands.put("Konec",new EndCommand()) ;
-       commands.put("Prozkoumat",new ExploreCommand());
-       commands.put("Jdi",new GoCommand());
-       commands.put("Pomoc", new HelpCommand());
-       commands.put("Napoveda", new HelpCommand());
-       commands.put("Seber",new TakeCommand());
-       commands.put("Promluv",new TalkCommand());
-       commands.put("Pouzij",new UseCommand());
+       commands.put("poloz",new DropCommand());
+       commands.put("konec",new EndCommand()) ;
+       commands.put("prozkoumat",new ExploreCommand());
+       commands.put("jid",new GoCommand());
+       commands.put("pomoc", new HelpCommand());
+       commands.put("napoveda", new HelpCommand());
+       commands.put("seber",new TakeCommand());
+       commands.put("promluv",new TalkCommand());
+       commands.put("pouzij",new UseCommand());
    }
 
-   public void provedPrikaz(String prikaz){
-       if (prikaz == null) return;
-
-       prikaz = prikaz.trim().toLowerCase();
-       if(prikaz.isEmpty()) return;
-
-       String command;
-       String argument;
-
-       int spaceIndex = prikaz.indexOf(" ");
-
-       if (spaceIndex == -1) {
-           command = prikaz;
-           argument = "";
-       }else{
-           command = prikaz.substring(0, spaceIndex);
-           argument = prikaz.substring(spaceIndex+1).trim();
+   public void provedPrikaz(String prikaz, Game game) {
+       if (prikaz == null || prikaz.trim().isEmpty()) {
+           game.printMessage("Nezadal jsi žádný příkaz.");
+           return;
        }
-       Command commandObj = commands.get(command);
 
-       if(commandObj == null){
+       String trimmed = prikaz.trim();
+       String[] parts = trimmed.split("\\s+");
+       String commandName = parts[0].toLowerCase();
 
+       // argument = zbytek řádku (umožní i více slov)
+       String argument = null;
+       if (parts.length > 1) {
+           argument = trimmed.substring(parts[0].length()).trim();
+           if (argument.isEmpty()) argument = null;
        }
+
+       Command cmd = commands.get(commandName);
+       if (cmd == null) {
+           game.printMessage("Neznámý příkaz. Napiš 'pomoc'.");
+           return;
+       }
+
+       cmd.proved(game, argument);
+
 
 
    }
-
-
-
 
 }
