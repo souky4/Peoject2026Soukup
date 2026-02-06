@@ -16,6 +16,7 @@ public class Game {
     private Inventory inventory;
     private SpravcePrikazu spravceprikazu;
     private boolean isRunning;
+    private boolean unlockedTrunnisal = false;
 
     public Game() {
         WorldLoader loader = new WorldLoader();
@@ -81,7 +82,7 @@ public class Game {
     }
 
     public void moveTo(String direction){
-        if (currentRoom.getId().equals("straznice") && direction.equals("jih") && !unlockedTrunniSal) {
+        if (currentRoom.getId().equals("straznice") && direction.equals("jih") && !unlockedTrunnisal) {
             printMessage("Dveře jsou zamčené. Možná by pomohl klíč.");
             return;
         }
@@ -160,6 +161,47 @@ public class Game {
                 break;
         }
     }
+    public void talkTo(String npcId){
+        NPC npc = currentRoom.getNpc(npcId);
+        if (npc == null) {
+            printMessage("Nikdo takový tu není.");
+            return;
+        }
+        printMessage(npc.getJmeno() + ": " + npc.getDialog());
+    }
+    public void showHelp() {
+        printMessage("Příkazy:");
+        printMessage("- jdi <smer>");
+        printMessage("- prozkoumat");
+        printMessage("- seber <itemId>");
+        printMessage("- poloz <itemId>");
+        printMessage("- inventar");
+        printMessage("- pouzij <itemId>");
+        printMessage("- promluv <npcId>");
+        printMessage("- napoveda");
+        printMessage("- pomoc");
+        printMessage("- konec");
+    }
+    public void showHint() {
+        printMessage(getHintText());
+    }
+    private String getHintText() {
+        switch (currentRoom.getId()) {
+            case "knihovna":
+                return "Tip: V knihovně se často skrývají důležité informace nebo svitek.";
+            case "straznice":
+                return "Tip: Pokud tě něco blokuje, zkus použít předmět (např. klíč).";
+            case "trunni_sal":
+                return "Tip: Hledej něco cenného. Krystal může být blízko.";
+            default:
+                return "Tip: Prozkoumávej místnosti a sbírej užitečné předměty.";
+        }
+    }
+    public void endGame() {
+        isRunning = false;
+        printMessage("Hra ukončena.");
+    }
+
 
 
 

@@ -53,6 +53,25 @@ public class Room {
         return items;
     }
 
+    public NPC getNpc(String npcId) {
+        for (Character character : characters) {
+            if(character instanceof NPC npc && character.getId().equals(npcId)) {
+                return npc;
+            }
+
+        }
+        return null;
+    }
+
+    public Item getItem(String itemId){
+        for(Item item : items){
+            if(item.getId().equals(itemId)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public List<Character> getCharacters() {
         return characters;
     }
