@@ -14,7 +14,7 @@ public class SpravcePrikazu {
        commands.put("poloz",new DropCommand());
        commands.put("konec",new EndCommand()) ;
        commands.put("prozkoumat",new ExploreCommand());
-       commands.put("jid",new GoCommand());
+       commands.put("jdi",new GoCommand());
        commands.put("pomoc", new HelpCommand());
        commands.put("napoveda", new HelpCommand());
        commands.put("seber",new TakeCommand());

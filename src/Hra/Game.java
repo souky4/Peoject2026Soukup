@@ -42,7 +42,7 @@ public class Game {
 
 
     private void checkWinCondition(){
-        if(currentRoom.getId().equals("vchod")&& inventory.getItem("magicky_krystal")!=null){
+        if(currentRoom.getId().equals("vchod")&& inventory.getItem("krystal")!=null){
             printMessage("");
             printMessage("✨ Získal jsi Magický krystal!");
             printMessage("✨ Vrátil ses zpět na vchod pevnosti.");

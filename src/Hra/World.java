@@ -14,11 +14,11 @@ public class World {
     }
 
     public void addRoom(Room room) {
-        rooms.put(room.getJmeno(), room);
+        rooms.put(room.getId(), room);
     }
 
-    public Room getRoom(String name) {
-        return rooms.get(name);
+    public Room getRoom(String id) {
+        return rooms.get(id);
     }
 
     public void setStartingRoom(Room room) {
@@ -32,4 +32,6 @@ public class World {
     public Collection<Room> getAllRooms() {
         return rooms.values();
     }
+
+
 }

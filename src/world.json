@@ -25,6 +25,7 @@
         {
           "id": "pochoden",
           "nazev": "Pochodeň",
+          "popis": "Dává světlo a může odhalit skryté věci.",
           "portable": true
         }
       ],
@@ -41,6 +42,7 @@
         {
           "id": "oltar",
           "nazev": "Oltář",
+          "popis": "Starý kamenný oltář pokrytý prachem a runami. Působí velmi starobyle.",
           "portable": false
         }
       ],
@@ -57,6 +59,7 @@
         {
           "id": "svitek",
           "nazev": "Magický svitek",
+          "popis": "Zažloutlý svitek popsaný neznámými symboly. Obsahuje dávné znalosti.",
           "portable": true
         }
       ],
@@ -97,6 +100,7 @@
         {
           "id": "trun",
           "nazev": "Trůn",
+          "popis": "Masivní kamenný trůn, ze kterého kdysi vládl pán pevnosti.",
           "portable": false
         }
       ],
@@ -114,6 +118,7 @@
         {
           "id": "klic",
           "nazev": "Klíč",
+          "popis": "Těžký kovový klíč. Vypadá, že patří k nějakým velkým dveřím.",
           "portable": true
         }
       ],
@@ -136,6 +141,7 @@
         {
           "id": "krystal",
           "nazev": "Magický krystal",
+          "popis": "Zářivý krystal pulzující magickou energií. Je zřejmé, že je velmi cenný.",
           "portable": true
         }
       ],

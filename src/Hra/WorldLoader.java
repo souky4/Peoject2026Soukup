@@ -6,6 +6,9 @@ import Hrac.NPC;
 import Hrac.Room;
 import com.google.gson.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 public class WorldLoader {
 
@@ -24,23 +27,33 @@ public class WorldLoader {
     }
 
     private JsonObject loadJson(String filePath) {
-        try (Reader reader = new FileReader(filePath)) {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(filePath);
+
+        if (is == null) {
+            throw new RuntimeException("Soubor '" + filePath + "' nebyl nalezen v resources.");
+        }
+
+        try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
-        } catch (IOException e) {
-            throw new RuntimeException("Nepodařilo se načíst JSON soubor");
+        } catch (Exception e) {
+            throw new RuntimeException("Nepodařilo se načíst JSON: " + filePath, e);
         }
     }
 
     private void loadRooms(World world, JsonObject json) {
         JsonArray roomsJson = json.getAsJsonArray("mistnosti");
+        if (roomsJson == null) {
+            throw new RuntimeException("V JSON chybí pole 'mistnosti'.");
+        }
 
         for (JsonElement element : roomsJson) {
             JsonObject roomJson = element.getAsJsonObject();
-            String id = roomJson.get("id").getAsString();
-            String nazev = roomJson.get("nazev").getAsString();
-            String popis = roomJson.get("popis").getAsString();
 
-            Room room = new Room(id,nazev,popis);
+            String id = getRequiredString(roomJson, "id");
+            String nazev = getRequiredString(roomJson, "nazev");
+            String popis = getRequiredString(roomJson, "popis");
+
+            Room room = new Room(id, nazev, popis);
             world.addRoom(room);
         }
     }
@@ -51,35 +64,52 @@ public class WorldLoader {
 
         for (JsonElement element : roomsJson) {
             JsonObject roomJson = element.getAsJsonObject();
-            String roomId = roomJson.get("id").getAsString();
 
+            String roomId = getRequiredString(roomJson, "id");
             Room room = world.getRoom(roomId);
+
             JsonObject exitsJson = roomJson.getAsJsonObject("exits");
-            for (String smer : exitsJson.keySet()) {
-                String targetId = exitsJson.get(smer).getAsString();
-                Room targeRoom = world.getRoom(targetId);
-                room.addExit(smer,targeRoom);
+            if (exitsJson == null) continue;
+
+            for (Map.Entry<String, JsonElement> exit : exitsJson.entrySet()) {
+                String direction = exit.getKey().toLowerCase();
+                String targetId = exit.getValue().getAsString();
+
+                Room targetRoom = world.getRoom(targetId);
+                if (targetRoom == null) {
+                    throw new RuntimeException("Místnost '" + roomId + "' má exit na neexistující id: " + targetId);
+                }
+
+                room.addExit(direction, targetRoom);
             }
         }
     }
 
     private void loadItems(World world, JsonObject json) {
-        JsonArray roomsJson = json.getAsJsonArray("rooms");
+        JsonArray roomsJson = json.getAsJsonArray("mistnosti");
 
         for (JsonElement element : roomsJson) {
             JsonObject roomJson = element.getAsJsonObject();
-            Room room = world.getRoom(roomJson.get("id").getAsString());
-            JsonArray itemsJson = roomJson.getAsJsonArray("items");
 
+            String roomId = getRequiredString(roomJson, "id");
+            Room room = world.getRoom(roomId);
+
+            JsonArray itemsJson = roomJson.getAsJsonArray("items");
             if (itemsJson == null) continue;
 
-            for (JsonElement itemElement : itemsJson) {
-                JsonObject itemJson = itemElement.getAsJsonObject();
-                Item item = new Item(
-                        itemJson.get("name").getAsString(),
-                        itemJson.get("description").getAsString(),
-                        itemJson.get("portable").getAsBoolean()
-                );
+            for (JsonElement itemEl : itemsJson) {
+                JsonObject itemJson = itemEl.getAsJsonObject();
+
+                String id = getRequiredString(itemJson, "id");
+                String nazev = getRequiredString(itemJson, "nazev");
+                String popis = getRequiredString(itemJson, "popis");
+
+                // portable je volitelné (když není, bereme true)
+                boolean portable = itemJson.has("portable") && itemJson.get("portable").isJsonPrimitive()
+                        ? itemJson.get("portable").getAsBoolean()
+                        : true;
+
+                Item item = new Item(id, nazev, portable,popis);
                 room.addItem(item);
             }
         }
@@ -90,24 +120,42 @@ public class WorldLoader {
 
         for (JsonElement element : roomsJson) {
             JsonObject roomJson = element.getAsJsonObject();
-            Room room = world.getRoom(roomJson.get("id").getAsString());
+
+            String roomId = getRequiredString(roomJson, "id");
+            Room room = world.getRoom(roomId);
+
             JsonArray charsJson = roomJson.getAsJsonArray("characters");
+            if (charsJson == null) continue;
 
-            if (charsJson == null ) continue;
+            for (JsonElement chEl : charsJson) {
+                JsonObject chJson = chEl.getAsJsonObject();
 
-            for (JsonElement charElement : charsJson) {
-                JsonObject charJson = charElement.getAsJsonObject();
-                Character npc = new NPC(
-                        charJson.get("id").getAsString(),
-                        charJson.get("jmeno").getAsString(),
-                        charJson.get("dialog").getAsString()
-                );
+                String id = getRequiredString(chJson, "id");
+                String jmeno = getRequiredString(chJson, "jmeno");
+
+                // dialog je volitelný
+                String dialog = chJson.has("dialog") ? chJson.get("dialog").getAsString() : "";
+
+                Character npc = new NPC(id, jmeno, dialog);
+                room.addCharacter(npc);
             }
         }
     }
 
     private void setStartingRoom(World world, JsonObject json) {
-        String startId = json.get("start").getAsString();
-        world.setStartingRoom(world.getRoom(startId));
+        String startId = getRequiredString(json, "start");
+        Room startRoom = world.getRoom(startId);
+
+        if (startRoom == null) {
+            throw new RuntimeException("Start místnost '" + startId + "' neexistuje (kontroluj JSON 'id').");
+        }
+
+        world.setStartingRoom(startRoom);
+    }
+    private String getRequiredString(JsonObject obj, String key) {
+        if (!obj.has(key) || obj.get(key).isJsonNull()) {
+            throw new RuntimeException("V JSON chybí povinný klíč '" + key + "'.");
+        }
+        return obj.get(key).getAsString();
     }
 }

@@ -1,5 +1,7 @@
 package Hrac;
 
+import com.google.gson.JsonArray;
+
 import java.util.*;
 
 public class Room {
@@ -12,7 +14,7 @@ public class Room {
     private List<Item> items;
     private List<Character> characters;
 
-    public Room(String id,String jmeno, String popis) {
+    public Room(String id, String jmeno, String popis) {
         this.jmeno = jmeno;
         this.popis = popis;
         this.id = id;
