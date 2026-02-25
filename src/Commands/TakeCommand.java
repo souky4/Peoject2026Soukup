@@ -1,11 +1,19 @@
 package Commands;
 import Hra.Game;
-import Hrac.Item;
 
+/**
+ * Příkaz pro sebrani itemu.
+ *
+ * @author Ondrej Soukup
+ */
 public class TakeCommand implements Command {
 
-
-
+    /**
+     * sebere item
+     *
+     * @param game hra
+     * @param argument argument prikazu
+     */
     @Override
     public void proved(Game game, String argument) {
         if (argument == null) {

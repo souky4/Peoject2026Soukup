@@ -8,6 +8,12 @@ import Hrac.NPC;
 import Hrac.Room;
 
 import java.util.Scanner;
+/**
+ * Hlavní třída hry.
+ * Řídí herní smyčku, zpracování vstupu a výstup do konzole.
+ *
+ * @author Ondrej Soukup
+ */
 
 public class Game {
 
@@ -27,6 +33,10 @@ public class Game {
         spravceprikazu = new SpravcePrikazu();
         isRunning = true;
     }
+
+    /**
+     * spusti herni smycku
+     */
     public void Start(){
         printWelcome();
         showCurrentRoom();
@@ -39,8 +49,9 @@ public class Game {
         }
     }
 
-
-
+    /**
+     * zjisti jestli hrac vzhral
+     */
     private void checkWinCondition(){
         if(currentRoom.getId().equals("vchod")&& inventory.getItem("krystal")!=null){
             printMessage("");
@@ -51,11 +62,18 @@ public class Game {
         };
     }
 
-
+    /**
+     * vypis jednotlivych textu
+     *
+     * @param text text ktery se ma vypsat
+     */
     public void printMessage(String text){
         System.out.println(text);
     }
 
+    /**
+     * vypise veskere informace o mistnosti kde se hrac prave nachazi
+     */
     public void showCurrentRoom() {
         printMessage("");
         printMessage(currentRoom.getJmeno());
@@ -81,6 +99,12 @@ public class Game {
 
     }
 
+    /**
+     * Pohyb hrace do jine mistnosti
+     *
+     * @param direction smer pohybu
+     */
+
     public void moveTo(String direction){
         if (currentRoom.getId().equals("straznice") && direction.equals("jih") && !unlockedTrunnisal) {
             printMessage("Dveře jsou zamčené. Možná by pomohl klíč.");
@@ -98,11 +122,20 @@ public class Game {
         checkWinCondition();
     }
 
+    /**
+     * vypis uvodniho textu
+     */
     public void printWelcome(){
         printMessage("Vítej ve hře!");
         printMessage("Cíl: najdi 'magicky_krystal' a vrať se na vchod.");
         printMessage("Napiš 'pomoc' pro seznam příkazů.");
     }
+
+    /**
+     * seber predmet z mistnosti
+     *
+     * @param itemId identifikátor předmětu
+     */
 
     public void takeItem(String itemId){
         Item item = currentRoom.getItem(itemId);
@@ -126,6 +159,12 @@ public class Game {
         printMessage("Sebral jsi: " + item.getNazev());
     }
 
+    /**
+     * polozi predmet do mistnosti
+     *
+     * @param itemId identifikátor předmětu
+     */
+
     public void dropItem(String itemId){
         Item item = inventory.getItem(itemId);
         if (item == null) {
@@ -136,6 +175,12 @@ public class Game {
         currentRoom.addItem(item);
         printMessage("Položil jsi: " + item.getNazev());
     }
+
+    /**
+     * pouzije predmet inventare
+     *
+     * @param itemId identifikátor předmětu
+     */
 
     public void useItem(String itemId){
         Item item = inventory.getItem(itemId);
@@ -161,6 +206,12 @@ public class Game {
                 break;
         }
     }
+
+    /**
+     * promluvi s NPC v mkstnosti
+     *
+     * @param npcId identifikátor postavy
+     */
     public void talkTo(String npcId){
         NPC npc = currentRoom.getNpc(npcId);
         if (npc == null) {
@@ -169,15 +220,19 @@ public class Game {
         }
         printMessage(npc.getJmeno() + ": " + npc.getDialog());
     }
+
+    /**
+     * ukaze seznam prikazu
+     */
     public void showHelp() {
         printMessage("Příkazy:");
         printMessage("- jdi <smer>");
         printMessage("- prozkoumat");
-        printMessage("- seber <itemId>");
-        printMessage("- poloz <itemId>");
+        printMessage("- seber <nazev Itemu>");
+        printMessage("- poloz <nazev Itemu>");
         printMessage("- inventar");
-        printMessage("- pouzij <itemId>");
-        printMessage("- promluv <npcId>");
+        printMessage("- pouzij <nazev Itemu>");
+        printMessage("- promluv <Jmeno Npc>");
         printMessage("- napoveda");
         printMessage("- pomoc");
         printMessage("- konec");
@@ -185,6 +240,12 @@ public class Game {
     public void showHint() {
         printMessage(getHintText());
     }
+
+    /**
+     * vzpise napovedu podle toho kde se nachazi
+     *
+     * @return text s napovedou
+     */
     private String getHintText() {
         switch (currentRoom.getId()) {
             case "knihovna":
@@ -197,6 +258,10 @@ public class Game {
                 return "Tip: Prozkoumávej místnosti a sbírej užitečné předměty.";
         }
     }
+
+    /**
+     * ukonci hru
+     */
     public void endGame() {
         isRunning = false;
         printMessage("Hra ukončena.");

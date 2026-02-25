@@ -109,7 +109,7 @@ public class WorldLoader {
                         ? itemJson.get("portable").getAsBoolean()
                         : true;
 
-                Item item = new Item(id, nazev, portable,popis);
+                Item item = new Item(nazev, id, portable,popis);
                 room.addItem(item);
             }
         }
@@ -136,7 +136,7 @@ public class WorldLoader {
                 // dialog je volitelný
                 String dialog = chJson.has("dialog") ? chJson.get("dialog").getAsString() : "";
 
-                Character npc = new NPC(id, jmeno, dialog);
+                Character npc = new NPC(jmeno, id, dialog);
                 room.addCharacter(npc);
             }
         }

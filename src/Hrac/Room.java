@@ -1,9 +1,12 @@
 package Hrac;
-
-import com.google.gson.JsonArray;
-
 import java.util.*;
-
+/**
+ * Třída reprezentuje místnost ve hře.
+ * Obsahuje identifikátor, název, popis, seznam východů,
+ * předmětů a postav nacházejících se v místnosti.
+ *
+ * @author Ondrej Soukup
+ */
 public class Room {
 
     private String jmeno;
@@ -13,6 +16,14 @@ public class Room {
 
     private List<Item> items;
     private List<Character> characters;
+
+    /**
+     *  Vytvori novou mistnost
+     *
+     * @param id identifikátor místnosti
+     * @param jmeno nazev moistnosti
+     * @param popis textovy popis mistnosti
+     */
 
     public Room(String id, String jmeno, String popis) {
         this.jmeno = jmeno;
@@ -31,9 +42,23 @@ public class Room {
         return popis;
     }
 
+    /**
+     * Vratí mistnost ve zvolenem smeru
+     *
+     * @param smer směr pohybu
+     * @return cilova mistnost nebo null
+     */
+
     public Room getExit(String smer) {
         return exit.get(smer);
     }
+
+    /**
+     * Prida vychod do jiné místnosti
+     *
+     * @param smer směr
+     * @param room cílová místnost
+     */
 
     public void addExit(String smer, Room room) {
         exit.put(smer, room);
@@ -43,10 +68,21 @@ public class Room {
         items.add(item);
     }
 
+    /**
+     * vrati textovy seznam dostupnych smeru
+     *
+     * @return  řetězec s východy oddělenými čárkou
+     */
+
     public String getExitNames(){return String.join(", ", exit.keySet());}
 
     public String getId(){return id;}
 
+    /**
+     * Odebere predmet z mistnosti
+     *
+     * @param item danny item v seznamu
+     */
     public void removeItem(Item item) {
         items.remove(item);
     }
@@ -54,6 +90,12 @@ public class Room {
     public List<Item> getItems() {
         return items;
     }
+
+    /**
+     *
+     * @param npcId identifikátor postavy
+     * @return nalezené NPC nebo null
+     */
 
     public NPC getNpc(String npcId) {
         for (Character character : characters) {
@@ -64,6 +106,13 @@ public class Room {
         }
         return null;
     }
+
+    /**
+     * najde predmet podle jeho id
+     *
+     * @param itemId identifikátor předmětu
+     * @return nalezený předmět nebo null
+     */
 
     public Item getItem(String itemId){
         for(Item item : items){
