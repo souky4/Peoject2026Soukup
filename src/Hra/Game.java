@@ -16,6 +16,13 @@ import java.util.Scanner;
  */
 
 public class Game {
+    private static final String RESET = "\u001B[0m";
+    private static final String BOLD = "\u001B[1m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String MAGENTA = "\u001B[35m";
+
 
     private World world;
     private Room currentRoom;
@@ -40,12 +47,16 @@ public class Game {
     public void Start(){
         printWelcome();
         showCurrentRoom();
+        showMap();
 
         Scanner scanner = new Scanner(System.in);
 
         while(isRunning){
             String input = scanner.nextLine();
             spravceprikazu.provedPrikaz(input,this);
+            if(isRunning){
+                showMap();
+            }
         }
     }
 
@@ -76,17 +87,18 @@ public class Game {
      */
     public void showCurrentRoom() {
         printMessage("");
-        printMessage(currentRoom.getJmeno());
+        printMessage(BOLD + CYAN + "════════════════════════════════════" + RESET);
+        printMessage(BOLD  + currentRoom.getJmeno() + RESET);
         printMessage(currentRoom.getPopis());
 
         if (!currentRoom.getItems().isEmpty()) {
-            printMessage("Předměty:");
+            printMessage(YELLOW + " Předměty:" + RESET);
             for (Item item : currentRoom.getItems()) {
                 printMessage("- " + item.getNazev() + " (" + item.getId() + ")");
             }
         }
         if (!currentRoom.getCharacters().isEmpty()) {
-            printMessage("Postavy:");
+            printMessage(MAGENTA + " Postavy:" + RESET);
             for (Character npc : currentRoom.getCharacters()) {
                 if (npc instanceof NPC) {
                     printMessage("- " + npc.getJmeno() + " (" + npc.getId() + ")");
@@ -94,10 +106,46 @@ public class Game {
             }
 
         }
-        printMessage("Východy: " + currentRoom.getExitNames());
+        printMessage(GREEN + " Východy: " + currentRoom.getExitNames() + RESET);
+        printMessage(BOLD + CYAN + "════════════════════════════════════" + RESET);
 
 
     }
+    /**
+     * vypise jednoduchou mapu hry a zvyrazni aktualni mistnost
+     */
+    public void showMap() {
+        printMessage("");
+        printMessage(BOLD + "🗺️ MAPA PEVNOSTI" + RESET);
+        printMessage("  " + roomLabel("knihovna"));
+        printMessage("      │");
+        printMessage(roomLabel("vchod") + " ── " + roomLabel("hlavni_chodba") + " ── " + roomLabel("zbrojnice"));
+        printMessage("               │");
+        printMessage("         " + roomLabel("straznice"));
+        printMessage("               │");
+        printMessage("         " + roomLabel("trunni_sal"));
+        printMessage("               │");
+        printMessage("   " + roomLabel("alchymisticka_laborator"));
+        printMessage("               │");
+        printMessage("            " + roomLabel("kaple"));
+    }
+
+    private String roomLabel(String roomId) {
+        Room room = world.getRoom(roomId);
+        if (room == null) {
+            return "[?]";
+        }
+
+        String label = "[" + room.getJmeno() + "]";
+        if (currentRoom.getId().equals(roomId)) {
+            return BOLD + GREEN + "➡ " + label + RESET;
+        }
+
+        return label;
+
+
+    }
+
 
     /**
      * Pohyb hrace do jine mistnosti
