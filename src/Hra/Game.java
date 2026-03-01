@@ -116,7 +116,7 @@ public class Game {
      */
     public void showMap() {
         printMessage("");
-        printMessage(BOLD + "🗺️ MAPA PEVNOSTI" + RESET);
+        printMessage(BOLD + " MAPA PEVNOSTI" + RESET);
         printMessage("  " + roomLabel("knihovna"));
         printMessage("      │");
         printMessage(roomLabel("vchod") + " ── " + roomLabel("hlavni_chodba") + " ── " + roomLabel("zbrojnice"));
